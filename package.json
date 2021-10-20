@@ -17,7 +17,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://git.zhonganinfo.com/zainfo/zarm-snippets/blob/dev/README.md"
+		"url": "https://github.com/kevinlvhsl/zarm-snippets/blob/master/README.md"
 	},
 	"main": "./out/extension.js",
 	"activationEvents": [
