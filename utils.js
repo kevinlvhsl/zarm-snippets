@@ -1,8 +1,11 @@
-var Mdjs = require('md-js').Mdjs;
-var fs = require('fs');
-var path = require('path');
-var mdjs = new Mdjs();
+const fs = require('fs');
 const cheerio = require('cheerio');
+const MarkdownIt = require('markdown-it');
+const md = new MarkdownIt();
+
+function isNotEmptyArray(arr) {
+  return Array.isArray(arr) && arr.length > 0;
+}
 
 // 中划线转驼峰
 function toHump(name, big) {
@@ -15,73 +18,71 @@ function toHump(name, big) {
   return hump;
 }
 
-/**
- * 获取所有组件的md文件
- * @param {string} rootPath md文件的根路径
- * @param {Array} noMdDirs 根目录下，不需要提取md的目录集合
- * @returns 返回所有md文件路径
- */
-function getComponentsMdPaths(rootPath, noMdDirs) {
-  const filePaths = [];
-  fs.readdirSync(rootPath).forEach((file, index) => {
-    // console.log('读取目录', file, typeof file)
-    // 过滤不需要提取md文件的目录;
-    if (noMdDirs.includes(file)) { return; }
-    filePaths.push(path.join(rootPath, '.', toHump(file, true), '/demo.md'));
-  });
-  return filePaths;
-}
-
-/**
- * 通过文件路径读取md文件中的table部分内容
- * @param {string} filePath md文件路径
- * @param {RegExp} componentNameReg 组件名称正则
- * @returns 返回表格部分的md内容
- */
-function getMdContentByFilePath(filePath, componentNameReg) {
-  // 读取到md内容
-  var content = fs.readFileSync(filePath, { encoding: 'utf-8' });
-  // 截取到API部分
-  var apiIndex = content.indexOf('## API');
-  // 没有API这块的直接不处理
-  if (apiIndex > -1) {
-    console.log('filePath:', filePath);
-    // 通过路径截取组件名称
-    const componentName = filePath.match(componentNameReg)[1];
-    if (!componentName) { return; }
-    // 截取到table部分的markdown内容
-    var tableMD = content.substr(apiIndex);
-    return { tableMD, componentName: toHump(componentName, true) };
+// 首字母转换为大写
+function initialsToUpper(str) {
+  if (typeof str === 'string' && str) {
+    return str.replace(/^(\w)/, (w) => w.toUpperCase());
   }
+  return str;
 }
 
-/**
- * 将zarm源码中提取API部分的markdown内容，转换成json文件
- * @param {string} mdText markdown源文件内容
- * @returns 
- */
-function getTable2json(mdText) {
-  var propRows = [];
-  var tableHtml = mdjs.md2html(mdText);
-  const $ = cheerio.load(tableHtml);
-  var rows = Array.from($('table tbody tr'));
-  // 4列【prop属性、type类型、default默认值、desc说明】
+// 获取组件文件名-主组件名
+function getBaseComponentName(filePath) {
+  if (typeof filePath === 'string' && filePath) {
+    const [a, name] = filePath.match(/\/([a-zA-Z\-]+)\/demo\.md/);
+    return name.split('-').map(initialsToUpper).join('');
+  }
+  return '';
+}
 
-  rows.forEach(row => {
-    var cols = Array.from(row.children);
+// 获取组件所有组件名(包括子组件)
+function getAllComponentName(filePath, mdStr) {
+  const name = getBaseComponentName(filePath);
+  const reg = new RegExp(`(?<=<)(${name}(\\.[^\\s>]+)?)`, 'ig');
+  const result = mdStr.match(reg);
+  return [name, [...new Set(result)]];
+}
 
-    var data = [];
-    cols.forEach((col, index) => {
-      // 获取到表格中的文案
-      var text = Array.from(col.children)[0].data;
-      data.push(text);
+// 获取组件Demo
+function getComponentExample(name, mdStr) {
+  const reg = new RegExp(`( *<${name}([\\s\\S]*?((?<=(<\\/${name}>))|(?<=\\/>))))[\s\S]*`, 'gi');
+  const arr = mdStr.match(reg) || [];
+  return arr.sort((a, b) => a.length < b.length)[0];
+}
+
+// JSON 格式化
+function jsonStringify(data, isPretty = true) {
+  return JSON.stringify(data, null, 2 * isPretty);
+}
+
+//
+const TYPE_LIST = ['prop', 'type', 'default', 'desc'];
+
+// 处理 html
+function dealHtml(html, name) {
+  const $ = cheerio.load(html);
+  const tables = $('table');
+  const props = [...tables].reduce((result, ele) => {
+    const prevTitle = $(ele).prev().text();
+    const key = prevTitle === 'API' ? name : prevTitle;
+    const trList = Array.from($(ele).find('tbody tr'));
+    const propList = [...trList].map((tr) => {
+      const tdList = $(tr).find('td');
+
+      return [...tdList].reduce((result, td, index) => {
+        const text = $(td).text().trim();
+        result[TYPE_LIST[index]] = text;
+        return result;
+      }, {});
     });
-
-    propRows.push({ prop: data[0], type: data[1], default: data[2], desc: data[3] });
-  });
-  // console.log('json对象', propRows);
-  const mdString = transformJSON2String(propRows);
-  return { propRows, mdString };
+    result[key] = propList;
+    return result;
+  }, {});
+  // console.log(apiMap);
+  return {
+    title: $('h1').text(),
+    props,
+  };
 }
 
 /**
@@ -93,25 +94,74 @@ function transformJSON2String(params) {
   if (!(Array.isArray(params) && params.length)) {
     return '';
   }
-  const rowsString = params.map((item) => {
-    const { prop, type, desc } = item;
-    const upProp = toHump(prop, true);
-    return `| ${upProp} | ${type || '-'} | ${item.default} | ${desc || '-'} |`;
-  }).join('\n');
+  const rowsString = params
+    .map((item) => {
+      const { prop, type, desc } = item;
+      const upProp = toHump(prop, true);
+      return `| ${upProp} | ${type || '-'} | ${item.default} | ${desc || '-'} |`;
+    })
+    .join('\n');
   const string = `| props | 类型 | 默认值 | 说明 |\n| :--- | :--- | :--- | :------: |\n${rowsString}\n\n`;
   return string;
 }
+
 /**
  * 将对象写入到json文件
  * @param {string} filePath 文件路径及名称
  * @param {json} json 文件内容对象
  */
 function writeJsonFile(filePath, json) {
-  fs.writeFileSync(filePath /*`./ dist / ${ name }.json`*/, json, { mode: 0o666 });
+  fs.writeFileSync(filePath /*`./ dist / ${ name }.json`*/, jsonStringify(json), { mode: 0o666 });
 }
+
+// 格式化 snippets
+function formatSnippets(snippets) {
+  const [a, str = ''] = snippets.match(/^(\s+)</) || [];
+  const reg = new RegExp(`\\n(\\s{${str.length}})`, 'g');
+  return snippets.replace(reg, '\n').trim();
+}
+
+// 创建snippets
+function createSnippets(arr) {
+  if (!isNotEmptyArray(arr)) {
+    return {};
+  }
+  return arr.reduce((result, item) => {
+    const { snippets, title } = item;
+    const keys = Object.keys(snippets);
+    keys.map((key) => {
+      result[key] = {
+        prefix: `za-${key}`,
+        scope: 'javascript,typescript',
+        body: [formatSnippets(snippets[key])],
+        description: title,
+      };
+    });
+    return result;
+  }, {});
+}
+
+// 处理 md 文件组
+function dealMdFiles(files) {
+  return files.map((filePath) => {
+    const mdStr = fs.readFileSync(filePath, 'utf-8');
+    // 组件名
+    const [baseName, allName] = getAllComponentName(filePath, mdStr);
+    const { title, props } = dealHtml(md.render(mdStr), baseName);
+    return {
+      name: baseName,
+      title,
+      props,
+      snippets: allName.reduce((res, name) => {
+        res[name] = getComponentExample(name, mdStr);
+        return res;
+      }, {}),
+    };
+  }, {});
+}
+
 module.exports = {
-  getTable2json,
   writeJsonFile,
-  getMdContentByFilePath,
-  getComponentsMdPaths,
+  dealMdFiles,
+  createSnippets,
 };
