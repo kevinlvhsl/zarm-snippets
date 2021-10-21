@@ -3,8 +3,9 @@
 	"displayName": "Zarm Snippets",
 	"description": "zarm mobile UI components snippets",
 	"icon": "images/zarm.png",
-	"version": "0.0.1",
+	"version": "0.0.3",
 	"publisher": "liangxiaojun",
+	"license": "MIT",
 	"engines": {
 		"vscode": "^1.61.0"
 	},

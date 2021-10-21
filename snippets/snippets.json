@@ -2,15 +2,14 @@
   "Button": {
     "prefix": "zaButton",
     "body": [
-      "<Button theme=\"${1|default,primary,danger|}\" block>$2</Button>",
-        ""
+      "<Button theme=\"${1|default,primary,danger|}\" block>$2</Button>"
     ],
     "description": "按钮,多种主题和尺寸"
   },
   "Icon": {
     "prefix": "zaIcon",
     "body": [
-      "<Icon theme=\"${1|default,primary,success,warning,danger|}\" type=\"$2\" size=\"$3\" />"
+      "<Icon theme=\"${1|default,primary,success,warning,danger|}\" size=\"${2|md,sm,lg|}\" type=\"{$3}\" />"
     ],
     "description": "Icon图标，支持iconfont和自定义svg图标"
   },
@@ -28,9 +27,7 @@
   },
   "Checkbox": {
     "prefix": "zaCheckbox",
-    "body": [
-      "<Checkbox type=\"${1|button, cell|}\" value={$2}>$2</Checkbox>"
-    ],
+    "body": ["<Checkbox type=\"${1|button,cell|}\" value={$2}>$3</Checkbox>"],
     "description": "复选框，支持按钮选项组"
   },
   "Checkbox with Group": {
@@ -47,9 +44,9 @@
     "prefix": "zaDatePicker",
     "body": [
       "<DatePicker",
-      "\tvisible={$1}",
-      "\tvalue={$2}",
-      "\tmode=\"${1|year, month, date, time, datetime}\"",
+      "\tmode=\"${1|year,month,date,time,datetime}\"",
+      "\tvisible={$2}",
+      "\tvalue={$3}",
       "\tonOk={(value) => {",
       "\t\tconsole.log('date', value);",
       "\t}}",
@@ -71,8 +68,8 @@
     "body": [
       "<Input",
       "\tclearable",
-      "\ttype=\"${1|text、number、idcard、price、password、search|}\"",
-      "\tvalue={$1}",
+      "\ttype=\"${1|text,number,idcard,price,password,search|}\"",
+      "\tvalue={$2}",
       "\tplaceholder=\"请输入\"",
       "/>"
     ],
@@ -82,28 +79,26 @@
     "prefix": "zaPicker",
     "body": [
       "<Picker",
-      "\tvisible={$1}",
-      "\tvalue={$2}",
-      "\tdataSource={$3}",
+      "\tvisible={$1|true,false|}",
+      "\tdataSource={$2}",
+      "\tvalue={$3}",
       "\tonOk={(selected) => {",
       "\t\tconsole.log('onOk: ', selected);",
       "\t}}",
-    "/>"
-  ],
-  "description": "选择器，可以自定义列数，方便定义确认操作"
+      "/>"
+    ],
+    "description": "选择器，可以自定义列数，方便定义确认操作"
   },
   "Radio": {
     "prefix": "zaRadio",
-    "body": [
-      "<Radio value=\"$1\">选项一</Radio>"
-    ],
+    "body": ["<Radio value=\"$1\">选项一</Radio>"],
     "description": "Radio"
   },
   "Radio with Group": {
-    "prefix": "zaRadio",
+    "prefix": "zaRadioGroup",
     "body": [
-      "<Radio.Group type=\"${1|button, cell|}\" shape=\"${2|rect, radius, round|}\">",
-      "\t<Radio value=\"0\">选项一</Radio>",
+      "<Radio.Group type=\"${1|button,cell|}\" shape=\"${2|rect,radius,round|}\">",
+      "\t<Radio value=\"0$3\">选项一</Radio>",
       "</Radio.Group>"
     ],
     "description": "Radio with Group"
@@ -112,12 +107,12 @@
     "prefix": "zaSearchBar",
     "body": [
       "<SearchBar",
-        "\tshowCancel",
-        "shape=\"${1|rect, radius, round|}\"",
-        "\tvalue={$12}",
-        "\tplaceholder=\"搜索\"",
-        "\tcancelText=\"取消\"",
-        "\tonChange={$3}",
+      "\tshowCancel",
+      "\tshape=\"${1|rect,radius,round|}\"",
+      "\tvalue={$2}",
+      "\tplaceholder=\"搜索\"",
+      "\tcancelText=\"取消\"",
+      "\tonChange={$3}",
       "/>"
     ],
     "description": "搜索栏，支持各种样式及自动获取焦点"
@@ -126,10 +121,10 @@
     "prefix": "zaSlider",
     "body": [
       "<Slider",
-        "\tmin={1}",
-        "\tmax={100}",
-        "\tvalue={$1}",
-        "\tonChange={$2}",
+      "\tmin={1}",
+      "\tmax={100}",
+      "\tvalue={$1}",
+      "\tonChange={$2}",
       "/>"
     ],
     "description": "滑动输入条，支持多段设置及步长"
@@ -137,18 +132,18 @@
   "StackPicker": {
     "prefix": "zaStackPicker",
     "body": [
-      "\t<StackPicker",
-        "\tmaskClosable",
-        "\tvisible={$1}",
-        "\tdataSource={$2}",
-        "\tvalue={$3}",
-        "\ttitle=\"层叠选择器标题\"",
-        "\tonChange={(value) => {",
-        "\t\tconsole.log('onChange', value);",
-        "\t}}",
-        "\tonOk={(value) => {",
-        "\t\tconsole.log('onOk', value);",
-        "\t}}",
+      "<StackPicker",
+      "\tmaskClosable",
+      "\tvisible={$1}",
+      "\tdataSource={$2}",
+      "\tvalue={$3}",
+      "\ttitle=\"层叠选择器标题\"",
+      "\tonChange={(value) => {",
+      "\t\tconsole.log('onChange', value);",
+      "\t}}",
+      "\tonOk={(value) => {",
+      "\t\tconsole.log('onOk', value);",
+      "\t}}",
       "/>"
     ],
     "description": "层叠选择器,允许任意选择层数"
@@ -157,11 +152,11 @@
     "prefix": "zaStepper",
     "body": [
       "<Stepper",
-        "\ttitle=\"设置默认值\"",
-        "\tshape=\"${1|rect, radius, circle|}\"",
-        "\ttype=\"${2|text、number、price、tel|}\"",
-        "\tonChange={$3}",
-        "\tvalue={$4}",
+      "\ttitle=\"设置默认值\"",
+      "\tshape=\"${1|rect,radius,circle|}\"",
+      "\ttype=\"${2|text,number,price,tel|}\"",
+      "\tonChange={$3}",
+      "\tvalue={$4}",
       "/>"
     ],
     "description": "步进器，数字输入，步长定制"
@@ -173,4 +168,373 @@
     ],
     "description": "开关"
   },
+  "Badge": {
+    "prefix": "zaBadge",
+    "body": [
+      "<Badge",
+      "\tshape='${1|rect,radius,round,circle,leaf|}'",
+      "\ttext='${2}'",
+      "\ttheme='${3|primary,success,warning,danger|}'",
+      "/>"
+    ],
+    "description": "徽标"
+  },
+  "Carousel": {
+    "prefix": "zaCarousel",
+    "body": [
+      "<Carousel",
+      "\tloop",
+      "\tdirection='${1|left,right,up,down|}'",
+      "\tonChange={(index) => { console.log(`onChange: ${index}`)}}",
+      ">",
+      "\t${2}",
+      "</Carousel>"
+    ],
+    "description": "走马灯,可横可纵，循环"
+  },
+  "Cell": {
+    "prefix": "zaCell",
+    "body": [
+      "<Cell",
+      "\ttitle='${1}'",
+      "\tdescription='${2}'",
+      ">",
+      "\t${3}",
+      "</Cell>"
+    ],
+    "description": "列表项，带描述、标题、图标"
+  },
+  "Collapse": {
+    "prefix": "zaCollapse",
+    "body": [
+      "<Collapse",
+      "\tmultiple='${1:true}'",
+      "\tactiveKey='${2:0}'",
+      "\tonChange={(key) => console.log(key)}",
+      ">",
+      "\t<Collapse.Item key=\"$3\" title=\"title\">",
+      "\t\t内容",
+      "\t</Collapse.Item >",
+      "</Collapse>"
+    ],
+    "description": "折叠面板"
+  },
+  "ImagePreview": {
+    "prefix": "zaImagePreview",
+    "body": [
+      "<ImagePreview",
+      "\tvisible={${1|true,false|}}",
+      "\timages='${2}'",
+      "\tonClose={() => console.log('close image')}",
+      "\tmaxScale={10}",
+      "\tactiveIndex={1}",
+      "/>"
+    ],
+    "description": "图片预览，images支持数组，可通过activeIndex指定需要预览的图片"
+  },
+  "Marquee": {
+    "prefix": "zaMarquee",
+    "body": [
+      "<Marquee",
+      "\tdirection=\"${1|right,left,up,down|}\"",
+      "\tanimationDelay={${2:2000}}",
+      "\tanimationDuration={${3:2000}}",
+      "\twidth={${4:200}}",
+      "\theight={${5:200}}",
+      ">",
+      "\t<div>",
+      "\t\t",
+      "\t</div>",
+      "</Marquee>"
+    ],
+    "description": "滚动，可设置滚动方向，动画的时间"
+  },
+  "NoticeBar": {
+    "prefix": "zaNoticeBar",
+    "body": [
+      "<NoticeBar",
+      "\ttheme='${1|default,primary,success,warning,danger|}'",
+      "\tcloseable={${2:false}}",
+      "\ticon={${3}}",
+      "\tonClick={() => { console.log('closeable')}}",
+      ">",
+      "\t${4}",
+      "</NoticeBar>"
+    ],
+    "description": "通告栏，可设置主题，图标"
+  },
+  "Panel": {
+    "prefix": "zaPanel",
+    "body": [
+      "<Panel",
+      "\ttitle=\"${1:false}\"",
+      "\tmore={${2}}",
+      ">",
+      "\t${3}",
+      "</Panel>"
+    ],
+    "description": "面板"
+  },
+  "Progress": {
+    "prefix": "zaProgress",
+    "body": [
+      "<Progress",
+      "shape=\"${1|line,circle,semi-circle|}\"",
+      "\ttheme='${2|primary,success,warning,danger|}'",
+      "\tsize='${3|md,lg,sm|}'",
+      "\tstrokeShape=\"${4|round,rect}\"",
+      "strokeWidth={$5}",
+      ">",
+      "\t${6}",
+      "</Progress>"
+    ],
+    "description": "进度条"
+  },
+  "Tooltip": {
+    "prefix": "zaTooltip",
+    "body": [
+      "<Tooltip direction=\"${1|topLeft,top,topRight,rightTop,right,rightBottom,bottomLeft,bottom,bottomRight,leftTop,left,leftBottom|}\" content=\"topLeft 提示内容\">",
+      "\t<Button >topLeft</Button>",
+      "</Tooltip>"
+    ],
+    "description": "文字提示"
+  },
+  "ActionSheet": {
+    "prefix": "zaActionSheet",
+    "body": [
+      "<ActionSheet",
+      "\tspacing",
+      "\tvisible={visible$1}",
+      "\tactions={BUTTONS$2}",
+      "\tonMaskClick={() => {$3}}",
+      "\tonCancel={() => {$4}}",
+      "/>"
+    ],
+    "description": "动作面板"
+  },
+  "ActivityIndicator": {
+    "prefix": "zaActivityIndicator",
+    "body": [
+      "<ActivityIndicator type=\"${1|circular,spinner|}\" size=\"${2|md,lg|}\" percent={75$3} />"
+    ],
+    "description": "活动指示器,loading"
+  },
+  "Loading": {
+    "prefix": "zaLoading",
+    "body": [
+      "Loading.show({",
+      "\tcontent: <ActivityIndicator />$1,",
+      "\tstayTime: 3000$2,",
+      "});"
+    ],
+    "description": "加载"
+  },
+  "Message": {
+    "prefix": "zaMessage",
+    "body": [
+      "<Message theme=\"${1|primary,default,success,warning,danger|}\" size=\"${2|md,lg|}\" onClick={() => {$3}}>",
+      "\t消息内容，可以点击",
+      "</Message>"
+    ],
+    "description": "消息"
+  },
+  "Modal": {
+    "prefix": "zaModal",
+    "body": [
+      "<Modal",
+      "\ttitle=\"标题\"",
+      "\tvisible={visible$1}",
+      "\tfooter={",
+      "\t\t<Button block onClick={() => $2toggle('visible')}>",
+      "\t\t\t确认",
+      "\t\t</Button>",
+      "\t}",
+      ">",
+      "\t<p>模态框内容</p>",
+      "</Modal>"
+    ],
+    "description": "模态框"
+  },
+  "Popper": {
+    "prefix": "zaPopper",
+    "body": [
+      "<Popper",
+      "\tcontent=\"我是气泡层的内容\"",
+      "\tdestroy={false}",
+      "\tvisible={visible}",
+      "\ttrigger=\"${1|click,hover,focus,manual,contextMenu|}\"",
+      "\tdirection=\"{${2|topLeft,top,topRight,rightTop,right,rightBottom,bottomLeft,bottom,bottomRight,leftTop,left,leftBottom|}\"}",
+      ">",
+      "\t<Button onClick={() => setVisible(!visible)}>",
+      "\t\t点击显示",
+      "\t</Button>",
+      "</Popper>"
+    ],
+    "description": "气泡层"
+  },
+  "Popup": {
+    "prefix": "zaPopup",
+    "body":[
+      "<Popup",
+      "\tvisible={visible.popBottom}",
+      "\tdirection=\"${1|top,bottom,left,right,center|}\"",
+      "\tonMaskClick={() => toggle('popBottom')$2}",
+      "\tdestroy={false}",
+      "\tmountContainer={() => document.body}",
+      ">",
+      "\t<div className=\"popup-box\">",
+      "\t\t<div>这里是内容区域,记得给popup-box设置样式</div>",
+      "\t</div>",
+      "</Popup>"
+    ],
+    "description": "弹出框"
+  },
+  "Pull": {
+    "prefix": "zaPull",
+    "body": [
+      "<Pull",
+      "\tref={pullRef$1}",
+      "\tstyle={style$2}",
+      "\t\trefresh={{",
+      "\t\tstate: refreshing$3,",
+      "\t\thandler: refreshData$4,",
+      "\t}}",
+      "\tload={{",
+      "\t\tstate: loading,",
+      "\t\tdistance: 200,",
+      "\t\thandler: loadData$5,",
+      "\t}}",
+      ">",
+      "{展示数据}",
+      "</Pull>"
+    ],
+    "description": "上拉加载下拉刷新"
+  },
+  "SwipeAction": {
+    "prefix": "zaSwipeAction",
+    "body": [
+      "<SwipeAction",
+      "\tright={[",
+      "\t<Button theme=\"primary\" onClick={}>右按钮1</Button>,",
+      "\t<Button theme=\"danger\" onClick={}>右按钮2</Button>,",
+      "\t]}",
+      ">",
+      "\t<Cell>左滑看看</Cell>",
+      "</SwipeAction>"
+    ],
+    "description": "滑动操作"
+  },
+
+  "Toast": {
+    "prefix": "zaToast",
+    "body": [
+      "Toast.show({",
+      "\tclassName: 'test',",
+      "\tcontent: '指定5秒后自动关闭',",
+      "\tstayTime: 5000,",
+      "\tmask: true,",
+      "\tafterClose: () => {",
+      "\t\tconsole.log('Toast已关闭');$1",
+      "\t},",
+      "});"
+    ],
+    "description": "轻提示"
+  },
+  "Affix": {
+    "prefix": "zaAffix",
+    "body": [
+      "<Affix offsetTop={20} scrollContainer={$1}>",
+      "\t<Button>Top</Button>",
+      "</Affix>"
+    ],
+    "description": "固钉"
+  },
+  "NavBar": {
+    "prefix": "zaNavBar",
+    "body": [
+      "<NavBar",
+      "\tleft={<Icon type=\"arrow-left\" theme=\"primary\" onClick={${1}} />}",
+      "\ttitle=\"这是标题\"",
+      "/>"
+    ],
+    "description": "导航栏"
+  },
+  "TabBar": {
+    "prefix": "zaTabBar",
+    "body": [
+      "<TabBar",
+      "\tvisible={$1} activeKey={$2} onChange={$3}",
+      ">",
+      "\t<TabBar.Item itemKey=\"home\" title=\"首页\" icon={<TabIcon type=\"home\" />} />",
+      "\t<TabBar.Item",
+      "\t\titemKey=\"found\"",
+      "\t\ttitle=\"保险\"",
+      "\t\ticon={<TabIcon type=\"insurance\" />}",
+      "\t/>",
+      "\t<TabBar.Item",
+      "\t\titemKey=\"my\"",
+      "\t\ttitle=\"我的\"",
+      "\t\ticon={<TabIcon type=\"user\" />}",
+      "\t/>",
+      "</TabBar>"
+    ],
+    "description": "标签栏"
+  },
+  "Tabs": {
+    "prefix": "zaTabs",
+    "body": [
+      "<Tabs value={$1} onChange={$2} direction={$3|horizontal,vertical|}>",
+      "\t<Panel title=\"选项卡1\">",
+      "\t\t<div>选项卡1内容</div>",
+      "\t</Panel>",
+      "\t<Panel title=\"选项卡2\">",
+      "\t\t<div>选项卡2内容</div>",
+      "\t</Panel>",
+      "</Tabs>"
+    ],
+    "description": "标签页"
+  },
+  "BackToTop": {
+    "prefix": "zaBackToTop",
+    "body": [
+      "<BackToTop scrollContainer={$1} onClick={$2}>",
+      "\t<div>top</div>",
+      "</BackToTop>"
+    ],
+    "description": "返回顶部"
+  },
+  "ConfigProvider": {
+    "prefix": "zaConfigProvider",
+    "body": [
+      "<ConfigProvider",
+      "\ttheme={${1|light,dark|}}",
+      "\tlocale={locale === 'enUS' ? enUS : zhCN}",
+      "\tprimaryColor={$2}",
+      ">",
+      "\t<Button> 开启 </Button>",
+      "</ConfigProvider>"
+    ],
+    "description": "全局配置"
+  },
+  "Drag": {
+    "prefix": "zaDrag",
+    "body": [
+      "<Drag onDragStart={} onDragMove={} onDragEnd={}>",
+      "\t<div",
+      "\t\tref={boxRef$1}",
+      "\t\tstyle={{",
+      "\t\t\tdisplay: 'inline-block',",
+      "\t\t\ttransform: `translate3d(${point[0]}px,${point[1]}px,0)`,",
+      "\t\t}}",
+      "\t>",
+      "\t\t{isDrag ? (",
+      "\t\t\t<Button theme=\"danger\">Let me go!</Button>",
+      "\t\t) : (",
+      "\t\t\t<Button theme=\"primary\">Catch me~</Button>",
+      "\t\t)}",
+      "\t</div>",
+      "</Drag>"
+    ],
+    "description": "拖拽"
+  }
 }

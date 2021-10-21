@@ -17,6 +17,9 @@ function toHump(name, big) {
   }
   return hump;
 }
+function toKebab(name) {
+  return name.replace(/([a-z])([A-Z])/, "$1-$2").toLowerCase();
+}
 
 // 首字母转换为大写
 function initialsToUpper(str) {
@@ -62,12 +65,12 @@ const TYPE_LIST = ['prop', 'type', 'default', 'desc'];
 function dealHtml(html, name) {
   const $ = cheerio.load(html);
   const tables = $('table');
-  const props = [...tables].reduce((result, ele) => {
+  const props = [...Array.from(tables)].reduce((result, ele) => {
     const prevTitle = $(ele).prev().text();
     const key = prevTitle === 'API' ? name : prevTitle;
     const trList = Array.from($(ele).find('tbody tr'));
     const propList = [...trList].map((tr) => {
-      const tdList = $(tr).find('td');
+      const tdList = Array.from($(tr).find('td'));
 
       return [...tdList].reduce((result, td, index) => {
         const text = $(td).text().trim();
@@ -94,13 +97,11 @@ function transformJSON2String(params) {
   if (!(Array.isArray(params) && params.length)) {
     return '';
   }
-  const rowsString = params
-    .map((item) => {
-      const { prop, type, desc } = item;
-      const upProp = toHump(prop, true);
-      return `| ${upProp} | ${type || '-'} | ${item.default} | ${desc || '-'} |`;
-    })
-    .join('\n');
+  const rowsString = params.map((item) => {
+    const { prop, type, desc } = item;
+    // const upProp = toHump(prop, false);
+    return `| ${prop} | ${type || '-'} | ${item.default} | ${desc || '-'} |`;
+  }).join('\n');
   const string = `| props | 类型 | 默认值 | 说明 |\n| :--- | :--- | :--- | :------: |\n${rowsString}\n\n`;
   return string;
 }
@@ -143,25 +144,58 @@ function createSnippets(arr) {
 
 // 处理 md 文件组
 function dealMdFiles(files) {
-  return files.map((filePath) => {
+  const hoverObject = {}; // { Button: '### Button \n\n [文档](https://zarm.design/#/components/${toKebab(componentName)})\n\n ---\n\n${mdString}' }
+  const source = files.map((filePath) => {
     const mdStr = fs.readFileSync(filePath, 'utf-8');
     // 组件名
     const [baseName, allName] = getAllComponentName(filePath, mdStr);
     const { title, props } = dealHtml(md.render(mdStr), baseName);
+    const hover = {};
+    const snippets = allName.reduce((res, name) => {
+      res[name] = getComponentExample(name, mdStr);
+      return res;
+    }, {});
+    function formatProps(comMap) {
+      const componentNames = Object.keys(comMap);
+      return componentNames.map((componentName, index) => {
+        if (componentName.length > 50) { return; }
+        componentName = componentName.replace(/[\u4e00-\u9fa5\s]/g, "");
+        console.log('提取componentName', componentName);
+        const start = `### ${index === 0 ? title : componentName}`;
+        const doc = index === 0 ? `[文档](https://zarm.design/#/components/${toKebab(componentName)})
+      `: '';
+        const snippet = snippets[componentName];
+        const end = transformJSON2String(comMap[componentName]);
+        hoverObject[componentName] = `${start}\n\n${doc}\n\ndemo:\n\n${snippet}\n\n${end}`;
+        return `${start}\n\n${doc}\n\ndemo:\n\n${snippet}\n\n${end}`;
+      });
+    }
+
+    formatProps(props);
+    // hoverObject[baseName] = {
+    //   hover,
+    //   snippets
+    // };
+
     return {
       name: baseName,
       title,
-      props,
+      components: props,
       snippets: allName.reduce((res, name) => {
         res[name] = getComponentExample(name, mdStr);
         return res;
       }, {}),
     };
   }, {});
+  return {
+    dataSource: source,
+    hoverObject
+  };
 }
 
 module.exports = {
   writeJsonFile,
   dealMdFiles,
   createSnippets,
+  toKebab
 };
