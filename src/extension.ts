@@ -24,9 +24,6 @@ export function activate(context: vscode.ExtensionContext) {
       const str = document.getText(document.getWordRangeAtPosition(position));
       const names = Object.keys(componentNameMap);
       // console.log(names, names.includes(str), str);
-      console.log(str, 'hovers', names);
-
-      // debugger;
       if (names.includes(str)) {
         const md: string = componentNameMap[str];
         console.log('md---', md);

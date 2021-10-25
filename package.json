@@ -3,7 +3,7 @@
 	"displayName": "Zarm Snippets",
 	"description": "zarm mobile UI components snippets",
 	"icon": "images/zarm.png",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"publisher": "liangxiaojun",
 	"license": "MIT",
 	"engines": {

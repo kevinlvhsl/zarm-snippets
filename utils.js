@@ -150,32 +150,29 @@ function dealMdFiles(files) {
     // 组件名
     const [baseName, allName] = getAllComponentName(filePath, mdStr);
     const { title, props } = dealHtml(md.render(mdStr), baseName);
-    const hover = {};
+
     const snippets = allName.reduce((res, name) => {
       res[name] = getComponentExample(name, mdStr);
       return res;
     }, {});
+    const problemComs = ['Picker'];
+    // 格式化hover提示面板内容
     function formatProps(comMap) {
       const componentNames = Object.keys(comMap);
       return componentNames.map((componentName, index) => {
         if (componentName.length > 50) { return; }
         componentName = componentName.replace(/[\u4e00-\u9fa5\s]/g, "");
         console.log('提取componentName', componentName);
-        const start = `### ${index === 0 ? title : componentName}`;
-        const doc = index === 0 ? `[文档](https://zarm.design/#/components/${toKebab(componentName)})
-      `: '';
+        const doc = `[文档](https://zarm.design/#/components/${toKebab(componentName)})`;
+        const start = `### ${index === 0 || problemComs.includes(componentName) ? title + ' ' + doc : componentName}`;
         const snippet = snippets[componentName];
         const end = transformJSON2String(comMap[componentName]);
-        hoverObject[componentName] = `${start}\n\n${doc}\n\ndemo:\n\n${snippet}\n\n${end}`;
-        return `${start}\n\n${doc}\n\ndemo:\n\n${snippet}\n\n${end}`;
+        hoverObject[componentName] = `${start}\n\n${snippet}\n\n${end}`;
+        return `${start}\n${snippet}\n\n${end}`;
       });
     }
 
     formatProps(props);
-    // hoverObject[baseName] = {
-    //   hover,
-    //   snippets
-    // };
 
     return {
       name: baseName,
