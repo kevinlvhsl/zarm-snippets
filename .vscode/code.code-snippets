@@ -1,0 +1,386 @@
+{
+  "ActionSheet": {
+    "prefix": "za-ActionSheet",
+    "scope": "javascript,typescript",
+    "body": [
+      "<ActionSheet\n  visible={visible1}\n  actions={BUTTONS}\n  onMaskClick={() => setVisible1(!visible1)}\n/>"
+    ],
+    "description": "ActionSheet 动作面板"
+  },
+  "ActivityIndicator": {
+    "prefix": "za-ActivityIndicator",
+    "scope": "javascript,typescript",
+    "body": [
+      "<ActivityIndicator />"
+    ],
+    "description": "ActivityIndicator 活动指示器"
+  },
+  "Affix": {
+    "prefix": "za-Affix",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Affix offsetTop={20}>\n  <Button theme=\"primary\">Top</Button>\n</Affix>"
+    ],
+    "description": "Affix 组件名"
+  },
+  "BackToTop": {
+    "prefix": "za-BackToTop",
+    "scope": "javascript,typescript",
+    "body": [
+      "<BackToTop scrollContainer={scrollContainer} onClick={() => console.log('click back to top')}>\n  <div\n    style={{\n      width: 60,\n      height: 60,\n      lineHeight: '60px',\n      textAlign: 'center',\n      backgroundColor: '#fff',\n      color: '#999',\n      fontSize: 20,\n      borderRadius: 30,\n      boxShadow: '0 2px 10px 0 rgba(0, 0, 0, 0.2)',\n      cursor: 'pointer',\n    }}\n  >\n    Up\n  </div>\n</BackToTop>"
+    ],
+    "description": "BackToTop 返回顶部"
+  },
+  "Badge": {
+    "prefix": "za-Badge",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Badge />"
+    ],
+    "description": "Badge 徽标"
+  },
+  "Button": {
+    "prefix": "za-Button",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Button>default</Button>"
+    ],
+    "description": "Button 按钮"
+  },
+  "Calendar": {
+    "prefix": "za-Calendar",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Calendar\n  multiple={multiple}\n  value={value}\n  min={min}\n  max={max}\n  dateRender={(date) => {\n    if (custom && /(0|6)/.test(date.getDay())) {\n      return (\n        <div className=\"custom\">\n          <div className=\"custom__date\">{date.getDate()}</div>\n          <div className=\"custom__text\">Closed</div>\n        </div>\n      );\n    }\n    return date.getDate();\n  }}\n  disabledDate={(date) => {\n    if (custom) return /(0|6)/.test(date.getDay());\n    return false;\n  }}\n  onChange={(value) => {\n    setValue(value);\n    console.log('onChange', value);\n  }}\n/>"
+    ],
+    "description": "Calendar 日历"
+  },
+  "Carousel": {
+    "prefix": "za-Carousel",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Carousel\n  onChange={(index) => {\n    console.log(`onChange: ${index}`);\n  }}\n>\n  {contentRender()}\n</Carousel>"
+    ],
+    "description": "Carousel 走马灯"
+  },
+  "Cell": {
+    "prefix": "za-Cell",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Cell title=\"标题文字\" />"
+    ],
+    "description": "Cell 列表项"
+  },
+  "Checkbox": {
+    "prefix": "za-Checkbox",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Checkbox>普通</Checkbox>"
+    ],
+    "description": "Checkbox 复选框"
+  },
+  "Checkbox.Group": {
+    "prefix": "za-Checkbox.Group",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Checkbox.Group value={value} onChange={setValue}>\n  <Checkbox value=\"0\">选项一</Checkbox>\n  <Checkbox value=\"1\">选项二</Checkbox>\n  <Checkbox value=\"2\">选项三</Checkbox>\n</Checkbox.Group>"
+    ],
+    "description": "Checkbox 复选框"
+  },
+  "Collapse": {
+    "prefix": "za-Collapse",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Collapse\n  disabled\n  activeKey={activeKey}\n  animated={animated}\n  multiple={multiple}\n  onChange={(activeKey) => {\n    console.log(activeKey);\n    setActiveKey(activeKey);\n  }}\n>\n  <Collapse.Item key=\"1\" title=\"Header of Item1\">\n    This is content of item1. This is content of item1. This is content of item1.\n  </Collapse.Item>\n  <Collapse.Item key=\"2\" title=\"Header of Item2\">\n    This is content of item2. This is content of item2. This is content of item2.\n  </Collapse.Item>\n  <Collapse.Item key=\"3\" title=\"Header of Item3\">\n    This is content of item3. This is content of item3. This is content of item3.\n  </Collapse.Item>\n</Collapse>"
+    ],
+    "description": "Collapse 折叠面板"
+  },
+  "Collapse.Item": {
+    "prefix": "za-Collapse.Item",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Collapse.Item key=\"1\" title=\"Header of Item1\">\n  This is content of item1. This is content of item1. This is content of item1.\n</Collapse.Item>"
+    ],
+    "description": "Collapse 折叠面板"
+  },
+  "ConfigProvider": {
+    "prefix": "za-ConfigProvider",
+    "scope": "javascript,typescript",
+    "body": [
+      "<ConfigProvider\n  locale={locale === 'enUS' ? enUS : zhCN}\n  primaryColor={primaryColor}\n  theme={theme}\n>\n  <>\n    <SearchBar />"
+    ],
+    "description": "ConfigProvider 全局配置"
+  },
+  "DatePicker": {
+    "prefix": "za-DatePicker",
+    "scope": "javascript,typescript",
+    "body": [
+      "<DatePicker\n  visible={state.date.visible}\n  mode=\"date\"\n  value={state.date.value}\n  wheelDefaultValue={state.date.wheelDefaultValue}\n  onOk={(value) => {\n    setValue('date', value);\n    toggle('date');\n    Toast.show(JSON.stringify(value));\n  }}\n  onCancel={() => toggle('date')}\n/>"
+    ],
+    "description": "DatePicker 日期选择器"
+  },
+  "Drag": {
+    "prefix": "za-Drag",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Drag onDragStart={onDragStart} onDragMove={onDragMove} onDragEnd={onDragEnd}>\n  <div\n    ref={boxRef}\n    style={{\n      display: 'inline-block',\n      transform: `translate3d(${point[0]}px, ${point[1]}px, 0)`,\n    }}\n  >\n    {drag ? (\n      <Button theme=\"danger\">Let me go!</Button>\n    ) : (\n      <Button theme=\"primary\">Catch me~</Button>\n    )}\n  </div>\n</Drag>"
+    ],
+    "description": "Drag 拖拽"
+  },
+  "FilePicker": {
+    "prefix": "za-FilePicker",
+    "scope": "javascript,typescript",
+    "body": [
+      "<FilePicker className=\"file-picker-btn\" onChange={onSelect}>\n  <Icon type=\"add\" size=\"lg\" />"
+    ],
+    "description": "FilePicker 文件选择器"
+  },
+  "Icon": {
+    "prefix": "za-Icon",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Icon component={YourSvg} />"
+    ],
+    "description": "Icon 图标"
+  },
+  "ImagePreview": {
+    "prefix": "za-ImagePreview",
+    "scope": "javascript,typescript",
+    "body": [
+      "<ImagePreview\n  visible={visibleState.common}\n  images={commonImages}\n  onClose={() => hide('common')}\n  maxScale={10}\n/>"
+    ],
+    "description": "ImagePreview 图片预览"
+  },
+  "Input": {
+    "prefix": "za-Input",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Input\n  clearable\n  type=\"text\"\n  placeholder=\"请输入\"\n  value={title}\n  onChange={(value) => {\n    setTitle(value);\n    console.log(`onChange: ${value}`);\n  }}\n  onBlur={(value) => console.log(`onBlur: ${value}`)}\n/>"
+    ],
+    "description": "Input 文本框"
+  },
+  "Keyboard": {
+    "prefix": "za-Keyboard",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Keyboard type={type} onKeyClick={(key) => console.log(key)} />"
+    ],
+    "description": "Keyboard 虚拟键盘"
+  },
+  "LocaleProvider": {
+    "prefix": "za-LocaleProvider",
+    "scope": "javascript,typescript",
+    "body": [
+      "<LocaleProvider locale={locales[lang]}>\n  <>\n    <Cell\n      title=\"切换语言包\"\n      description={\n        <Radio.Group compact type=\"button\" value={lang} onChange={setLang}>\n          <Radio value=\"zh_CN\">中文</Radio>\n          <Radio value=\"en_US\">EN</Radio>\n        </Radio.Group>\n      }\n    />"
+    ],
+    "description": "LocaleProvider 国际化<br />（即将废弃）"
+  },
+  "Marquee": {
+    "prefix": "za-Marquee",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Marquee animationDelay={2000} animationDuration={30000}>\n  <div>我延迟执行2秒，从右向左滚动，字有点多，我走慢点</div>\n</Marquee>"
+    ],
+    "description": "Marquee 滚动"
+  },
+  "Mask": {
+    "prefix": "za-Mask",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Mask visible={visible} onClick={toggle} />"
+    ],
+    "description": "Mask 遮罩"
+  },
+  "Message": {
+    "prefix": "za-Message",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Message>普通</Message>"
+    ],
+    "description": "Message 消息"
+  },
+  "Modal": {
+    "prefix": "za-Modal",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Modal visible={state.normal.visible} title=\"标题\" closable onCancel={() => toggle('normal')}>\n  模态框内容\n</Modal>"
+    ],
+    "description": "Modal 模态框"
+  },
+  "NavBar": {
+    "prefix": "za-NavBar",
+    "scope": "javascript,typescript",
+    "body": [
+      "<NavBar\n  left={<Icon type=\"arrow-left\" theme=\"primary\" onClick={() => window.history.back()} />"
+    ],
+    "description": "NavBar 导航栏"
+  },
+  "NoticeBar": {
+    "prefix": "za-NoticeBar",
+    "scope": "javascript,typescript",
+    "body": [
+      "<NoticeBar>普通</NoticeBar>"
+    ],
+    "description": "NoticeBar 通告栏"
+  },
+  "Panel": {
+    "prefix": "za-Panel",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Panel\n  title=\"标题\"\n  more={\n    <a href=\"#\" onClick={() => alert('click more')}>\n      更多\n    </a>\n  }\n>\n  <div className=\"box\">内容</div>\n</Panel>"
+    ],
+    "description": "Panel 面板"
+  },
+  "Picker": {
+    "prefix": "za-Picker",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Picker\n  visible={state.single.visible}\n  value={state.single.value}\n  dataSource={state.single.dataSource}\n  onOk={(selected) => {\n    console.log('Single Picker onOk: ', selected);\n    Toast.show(JSON.stringify(selected));\n    setValue(\n      'single',\n      selected.map((item) => item.value),\n    );\n    setVisible('single');\n  }}\n  onCancel={() => setVisible('single')}\n/>"
+    ],
+    "description": "Picker 选择器"
+  },
+  "PinchZoom": {
+    "prefix": "za-PinchZoom",
+    "scope": "javascript,typescript",
+    "body": [
+      "<PinchZoom>\n  <img src=\"https://static.zhongan.com/website/health/zarm/images/banners/1.png\" />"
+    ],
+    "description": "PinchZoom"
+  },
+  "Popper": {
+    "prefix": "za-Popper",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Popper\n  content=\"我是气泡层的内容\"\n  destroy={false}\n  visible={visible}\n  trigger={trigger}\n  direction={direction}\n  animationType={animationType}\n  className=\"custom-content\"\n>\n  <Button\n    theme=\"primary\"\n    size=\"xs\"\n    onClick={() => trigger === 'manual' && setVisible(!visible)}\n  >\n    点击{visible ? '隐藏' : '显示'}\n  </Button>\n</Popper>"
+    ],
+    "description": "Popper 气泡层"
+  },
+  "Popup": {
+    "prefix": "za-Popup",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Popup\n  visible={visible.popTop}\n  direction=\"top\"\n  mask={false}\n  afterClose={() => console.log('关闭')}\n>\n  <div className=\"popup-box-top\">更新成功</div>\n</Popup>"
+    ],
+    "description": "Popup 弹出框"
+  },
+  "Progress": {
+    "prefix": "za-Progress",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Progress\n  shape=\"line\"\n  percent={percent}\n  theme={theme}\n  strokeShape={strokeShape}\n  strokeWidth={strokeWidth}\n/>"
+    ],
+    "description": "Progress 进度条"
+  },
+  "Pull": {
+    "prefix": "za-Pull",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Pull\n  ref={pullRef}\n  style={style}\n  refresh={{\n    state: refreshing,\n    handler: refreshData,\n    // render: (refreshState, percent) => {\n    //   const cls = 'custom-control';\n    //   switch (refreshState) {\n    //     case REFRESH_STATE.pull:\n    //       return (\n    //         <div className={cls}>\n    //           <ActivityIndicator loading={false} percent={percent} />"
+    ],
+    "description": "Pull 上拉加载下拉刷新"
+  },
+  "Radio": {
+    "prefix": "za-Radio",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Radio>普通</Radio>"
+    ],
+    "description": "Radio 单选框"
+  },
+  "Radio.Group": {
+    "prefix": "za-Radio.Group",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Radio.Group>\n  <Radio value=\"0\">选项一</Radio>\n  <Radio value=\"1\">选项二</Radio>\n  <Radio value=\"2\">选项三</Radio>\n</Radio.Group>"
+    ],
+    "description": "Radio 单选框"
+  },
+  "Scroller": {
+    "prefix": "za-Scroller",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Scroller container={() => containerRef.current} onScroll={setScrollTop}>\n  <div\n    ref={containerRef}\n    style={{\n      overflowY: 'auto',\n      maxHeight: 400,\n    }}\n  >\n    {list}\n  </div>\n</Scroller>"
+    ],
+    "description": "Scroller 滚动"
+  },
+  "SearchBar": {
+    "prefix": "za-SearchBar",
+    "scope": "javascript,typescript",
+    "body": [
+      "<SearchBar\n  onSubmit={(value) => {\n    console.log(`搜索内容为${value}`);\n  }}\n  onFocus={() => {\n    console.log('获取焦点');\n  }}\n  onChange={(value) => {\n    console.log(value);\n  }}\n  onBlur={() => {\n    console.log('失去焦点');\n  }}\n  onClear={() => {\n    console.log('点击了清除');\n  }}\n  onCancel={() => {\n    console.log('点击了取消');\n  }}\n/>"
+    ],
+    "description": "SearchBar 搜索框"
+  },
+  "Slider": {
+    "prefix": "za-Slider",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Slider value={value} onChange={setValue} />"
+    ],
+    "description": "Slider 滑动输入条"
+  },
+  "StackPicker": {
+    "prefix": "za-StackPicker",
+    "scope": "javascript,typescript",
+    "body": [
+      "<StackPicker\n  maskClosable\n  visible={visible}\n  value={value}\n  title=\"层叠选择器\"\n  dataSource={District}\n  onChange={(value) => {\n    console.log('onChange', value);\n  }}\n  onOk={(value) => {\n    console.log('onOk', value);\n    setValue(value);\n    setVisible(false);\n  }}\n  onCancel={() => {\n    console.log('onCancel');\n    setVisible(false);\n  }}\n/>"
+    ],
+    "description": "StackPicker 层叠选择器"
+  },
+  "Stepper": {
+    "prefix": "za-Stepper",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Stepper\n  value={value}\n  onChange={setValue}\n  onInputChange={(value) => {\n    console.log('onInputChange:', value);\n  }}\n/>"
+    ],
+    "description": "Stepper 步进器"
+  },
+  "SwipeAction": {
+    "prefix": "za-SwipeAction",
+    "scope": "javascript,typescript",
+    "body": [
+      "<SwipeAction\n  right={[\n    <Button size=\"lg\" shape=\"rect\" theme=\"primary\" onClick={() => console.log('右按钮1')}>\n      右按钮1\n    </Button>,\n    <Button size=\"lg\" shape=\"rect\" theme=\"danger\" onClick={() => console.log('右按钮2')}>\n      右按钮2\n    </Button>,\n  ]}\n>\n  <Cell>左滑看看</Cell>\n</SwipeAction>"
+    ],
+    "description": "SwipeAction 滑动操作"
+  },
+  "Switch": {
+    "prefix": "za-Switch",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Switch checked={checked} onChange={setChecked} />"
+    ],
+    "description": "Switch 开关"
+  },
+  "TabBar": {
+    "prefix": "za-TabBar",
+    "scope": "javascript,typescript",
+    "body": [
+      "<TabBar visible={visible} activeKey={activeKey} onChange={setActiveKey}>\n  <TabBar.Item itemKey=\"home\" title=\"主页\" icon={<TabIcon type=\"home\" />"
+    ],
+    "description": "TabBar 标签栏"
+  },
+  "TabBar.Item": {
+    "prefix": "za-TabBar.Item",
+    "scope": "javascript,typescript",
+    "body": [
+      "<TabBar.Item itemKey=\"home\" title=\"主页\" icon={<TabIcon type=\"home\" />"
+    ],
+    "description": "TabBar 标签栏"
+  },
+  "Tabs": {
+    "prefix": "za-Tabs",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Tabs value={value} onChange={setValue}>\n  <Panel title=\"选项卡1\">\n    <div className=\"content\">选项卡1内容</div>\n  </Panel>\n  <Panel title=\"选项卡2\">\n    <div className=\"content\">选项卡2内容</div>\n  </Panel>\n</Tabs>"
+    ],
+    "description": "Tabs 标签页"
+  },
+  "Tooltip": {
+    "prefix": "za-Tooltip",
+    "scope": "javascript,typescript",
+    "body": [
+      "<Tooltip direction=\"topLeft\" content=\"topLeft text\">\n  <Button size=\"xs\">TL</Button>\n</Tooltip>"
+    ],
+    "description": "Tooltip 工具提示"
+  }
+}
