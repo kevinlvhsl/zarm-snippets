@@ -1,6 +1,6 @@
 # zarm-snippets
 
-> zarm UI components snippets
+> zarm UI components, vscode snippets plugin
 
 ---
 
@@ -21,7 +21,7 @@ ext install zarm-snippets
 
 在 js(x)或 ts(x)文件中 输入 za 开头的字母，触发预置代码块
 
-> [demo ![](/images/demo.gif)](###)
+> [demo ![](images/demo.gif)](###)
 
 ### 可用的 Snippets
 
