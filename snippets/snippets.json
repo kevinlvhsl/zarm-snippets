@@ -54,6 +54,36 @@
     ],
     "description": "日期选择器，各种组合，支持设置步进间隔"
   },
+  "DateSelect": {
+    "prefix": "zaDateSelect",
+    "body": [
+      "<DateSelect",
+      "\ttitle=\"选择日期\"",
+      "\tplaceholder=\"请选择日期\"",
+      "\tmode=\"${1|date,year,month,time,datetime}\"",
+      "\tvalue={$3}",
+      "\tmin=\"2000-01-01\"",
+      "\tmax=\"2022-01-01\"",
+      "\tonOk={(value) => {",
+      "\t\tconsole.log('date', value);",
+      "\t}}",
+      "/>"
+    ],
+    "description": "日期选择器，各种组合，支持设置步进间隔"
+  },
+  "DatePickerView": {
+    "prefix": "zaDatePickerView",
+    "body": [
+      "<DatePickerView",
+      "\tmode=\"${1|datetime,year,month,date,time}\"",
+      "\tvalue={$2}",
+      "\tonOk={(value) => {",
+      "\t\tconsole.log('datePickerView => ', value);",
+      "\t}}",
+      "/>"
+    ],
+    "description": "日期选择器，各种组合，支持设置步进间隔"
+  },
   "FilePicker": {
     "prefix": "zaFilePicker",
     "body": [
@@ -101,7 +131,7 @@
       "\t<Radio value=\"0$3\">选项一</Radio>",
       "</Radio.Group>"
     ],
-    "description": "Radio with Group"
+    "description": "单选按钮组"
   },
   "SearchBar": {
     "prefix": "zaSearchBar",
@@ -172,9 +202,9 @@
     "prefix": "zaBadge",
     "body": [
       "<Badge",
-      "\tshape='${1|rect,radius,round,circle,leaf|}'",
-      "\ttext='${2}'",
-      "\ttheme='${3|primary,success,warning,danger|}'",
+      "\tshape=\"${1|rect,radius,round,circle,leaf|}\"",
+      "\ttext=\"${2}\"",
+      "\ttheme=\"${3|primary,success,warning,danger|}\"",
       "/>"
     ],
     "description": "徽标"
@@ -184,10 +214,10 @@
     "body": [
       "<Carousel",
       "\tloop",
-      "\tdirection='${1|left,right,up,down|}'",
+      "\tdirection=\"${1|left,right,up,down|}\"",
       "\tonChange={(index) => { console.log(`onChange: ${index}`)}}",
       ">",
-      "\t${2}",
+      "\t<img src=\"${2}\" />",
       "</Carousel>"
     ],
     "description": "走马灯,可横可纵，循环"
@@ -196,8 +226,8 @@
     "prefix": "zaCell",
     "body": [
       "<Cell",
-      "\ttitle='${1}'",
-      "\tdescription='${2}'",
+      "\ttitle=\"${1}\"",
+      "\tdescription=\"${2}\"",
       ">",
       "\t${3}",
       "</Cell>"
@@ -208,8 +238,8 @@
     "prefix": "zaCollapse",
     "body": [
       "<Collapse",
-      "\tmultiple='${1:true}'",
-      "\tactiveKey='${2:0}'",
+      "\tmultiple=\"${1:true}\"",
+      "\tactiveKey=\"${2:0}\"",
       "\tonChange={(key) => console.log(key)}",
       ">",
       "\t<Collapse.Item key=\"$3\" title=\"title\">",
@@ -219,12 +249,21 @@
     ],
     "description": "折叠面板"
   },
+  "Collapse with Item": {
+    "prefix": "zaCollapseItem",
+    "body": [
+      "<Collapse.Item key=\"$1\" title=\"$2\">",
+      "\t内容",
+      "</Collapse.Item >"
+    ],
+    "description": "折叠面板项"
+  },
   "ImagePreview": {
     "prefix": "zaImagePreview",
     "body": [
       "<ImagePreview",
       "\tvisible={${1|true,false|}}",
-      "\timages='${2}'",
+      "\timages=\"${2}\"",
       "\tonClose={() => console.log('close image')}",
       "\tmaxScale={10}",
       "\tactiveIndex={1}",
@@ -253,7 +292,7 @@
     "prefix": "zaNoticeBar",
     "body": [
       "<NoticeBar",
-      "\ttheme='${1|default,primary,success,warning,danger|}'",
+      "\ttheme=\"${1|default,primary,success,warning,danger|}\"",
       "\tcloseable={${2:false}}",
       "\ticon={${3}}",
       "\tonClick={() => { console.log('closeable')}}",
@@ -280,8 +319,8 @@
     "body": [
       "<Progress",
       "shape=\"${1|line,circle,semi-circle|}\"",
-      "\ttheme='${2|primary,success,warning,danger|}'",
-      "\tsize='${3|md,lg,sm|}'",
+      "\ttheme=\"${2|primary,success,warning,danger|}\"",
+      "\tsize=\"${3|md,lg,sm|}\"",
       "\tstrokeShape=\"${4|round,rect}\"",
       "strokeWidth={$5}",
       ">",
@@ -429,8 +468,8 @@
     "prefix": "zaToast",
     "body": [
       "Toast.show({",
-      "\tclassName: 'test',",
-      "\tcontent: '指定5秒后自动关闭',",
+      "\tclassName: \"test\",",
+      "\tcontent: \"指定5秒后自动关闭\",",
       "\tstayTime: 5000,",
       "\tmask: true,",
       "\tafterClose: () => {",
@@ -480,6 +519,17 @@
     ],
     "description": "标签栏"
   },
+  "TabBar with Item": {
+    "prefix": "zaTabBarItem",
+    "body": [
+      "<TabBar.Item.Item",
+      "\t\titemKey=\"$1\"",
+      "\t\ttitle=\"$2\"",
+      "\t\ticon={<TabIcon type=\"$3\" />}",
+      "\t/>"
+    ],
+    "description": "标签栏单项"
+  },
   "Tabs": {
     "prefix": "zaTabs",
     "body": [
@@ -493,6 +543,15 @@
       "</Tabs>"
     ],
     "description": "标签页"
+  },
+  "Tabs with Panel": {
+    "prefix": "zaTabsPanel",
+    "body": [
+      "<Tabs.Panel title=\"$1\">",
+      "\t<div>内容$2</div>",
+      "</Tabs.Panel>"
+    ],
+    "description": "标签页页签内容"
   },
   "BackToTop": {
     "prefix": "zaBackToTop",
